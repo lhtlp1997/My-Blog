@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.3/showdown.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <form th:action="@{/edit}" method="post">
+        <div class="container-fluid" style="margin-top: 10px">
+            <div class="form-group col-md-6">
+                <textarea name="title" rows="1" class="form-control" placeholder="标题"></textarea>
+            </div>
+        </div>
+        <div class="container-fluid" style="margin-top: 10px">
+            <div class="form-group col-md-6">
+                <textarea name="content" class="form-control" id="mkd" rows="30" placeholder="正文，请按照markdown语法进行编写"></textarea>
+            </div>
+            <div class="col-md-6">
+                <p id="id"></p>
+            </div>
+        </div>
+        <div class="container-fluid" style="margin: 15px">
+            <input type="submit" value="确认">
+        </div>
+    </form>
+    <script>
+        $(function () {
+            var converter = new showdown.Converter();
+            $("#mkd").on('keyup', function () {
+                var text = $("#mkd").val();
+                var content = converter.makeHtml(text);
+                $("#id").html(content);
+            });
+        })
+    </script>
+</body>
+
+</html>
